@@ -5,6 +5,7 @@ const async = require('async');
 /**
  * 并行得执行,并把结果收集(结果还是按顺序的)
  * 通过callback给值
+ * 必须得有callback
  * @type {number}
  */
 let test = 0;
