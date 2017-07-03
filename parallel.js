@@ -3,7 +3,7 @@
  */
 const async = require('async');
 /**
- * 并行得执行,并把结果收集(结果还是按顺序的)
+ * 并行得执行,并把结果收集(结果还是按顺序的),有错误就提前结束了
  * 通过callback给值
  * 必须得有callback
  * @type {number}
@@ -20,32 +20,38 @@ async.parallel(
         function (callback) {
             setTimeout(function () {
                 console.log(test);
-                callback(null, 'two');
+                //callback(null, 'two');
+                callback(new Error());
             }, 100);
         }
     ],
     function (err, results) {
-        //[ 'one', 'two' ]
-        console.log(results)
-    }
-);
-
-
-async.parallel(
-    {
-        one: function (callback) {
-            setTimeout(function () {
-                callback(null, 1);
-            }, 200);
-        },
-        two: function (callback) {
-            setTimeout(function () {
-                callback(null, 2);
-            }, 100);
+        if(err){
+            console.log(err)
+        } else {
+            //[ 'one', 'two' ]
+            console.log(results)
         }
-    },
-    function (err, results) {
-        //{ two: 2, one: 1 },map不能保证顺序
-        console.log(results)
     }
 );
+
+
+// async.parallel(
+//     {
+//         one: function (callback) {
+//             setTimeout(function () {
+//                 callback(null, 1);
+//             }, 200);
+//         },
+//         two: function (callback) {
+//             setTimeout(function () {
+//                 callback(null, 2);
+//             }, 100);
+//         }
+//     },
+//     function (err, results) {
+//         //{ two: 2, one: 1 },map不能保证顺序
+//         console.log(results)
+//     }
+// );
+//

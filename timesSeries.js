@@ -5,6 +5,8 @@ const async = require('async');
 /**
  * 重复执行函数，并得到所有的值
  * 如果有异步也会按顺序传值
+ * 第二个函数会等第一个函数的异步也结束了才执行
+ *
  * 值通过next传递
  * @param id
  * @param callback
